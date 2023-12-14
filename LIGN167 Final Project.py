@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import scrolledtext
 from tkinter import ttk
 
+
 client = OpenAI(api_key="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")
 ASSISTANT_ID = "asst_vJ36o3cI1KmaUrznlW66zKZh"
 
@@ -152,12 +153,38 @@ def main_window():
         root.title("LIGN 101 Tutor")
         root.configure(bg=background_color)
 
+        instructions = (
+            "Hi, I'm your Practice Quiz Generator."
+            "You can select the following topics and the difficulty level\n"
+            "Topics:\n"
+            "- Varieties\n"
+            "- Phonetics\n"
+            "- Phonology\n"
+            "- Morphology\n"
+            "- Syntax\n"
+            "- Japanese Syntax\n"
+            "- Turkish Syntax\n"
+            "- Semprag\n\n"
+            "Difficulty Level:\n"
+            "- Easy\n"
+            "- Moderate\n"
+            "- Hard\n\n"
+
+            "After you provide your response, I will give you the correct answer and the explanation."
+            "In addition, you can type 'mark' to mark any questions you want to save for later review. After you respond to 5 questions, "
+            "I will provide you feedback and the suggestions for your improvement in future study.\n\n"
+        )
+
         # GUI elements with enhanced styling
         conversation_history = scrolledtext.ScrolledText(root, state=tk.DISABLED, font=(font_style, 12))
         conversation_history.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
         conversation_history.tag_config("bold", font=("Helvetica", 12, "bold"))
 
         conversation_history.config(font=(font_style, font_size), bg=background_color, fg=text_color)
+
+        conversation_history.configure(state=tk.NORMAL)
+        conversation_history.insert(tk.END, instructions)
+        conversation_history.configure(state=tk.DISABLED)
 
         entry_field = tk.Text(root, height=3, font=("Helvetica", 12))
         entry_field.grid(row=1, column=0, sticky="nsew", padx=10, pady=10, columnspan=1)
@@ -170,8 +197,9 @@ def main_window():
         back_button = tk.Button(root, text="Back", command=go_back, bg="light grey", font=("Helvetica", 14))
         back_button.grid(row=2, column=0, columnspan=2, sticky="nsew", padx=10, pady=10)
 
-        next_button = tk.Button(root, text="Next", command=generate_next_response, bg="light grey", font=("Helvetica", 14))
+        next_button = tk.Button(root, text="Next Question", command=generate_next_response, bg="light grey", font=("Helvetica", 14))
         next_button.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
+
 
         # Configure grid rows and columns
         root.grid_rowconfigure(0, weight=1)  # Makes the conversation history expandable
